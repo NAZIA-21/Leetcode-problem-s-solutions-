@@ -1,0 +1,21 @@
+//LeetCode 2336. Smallest number in infinite set
+class SmallestInfiniteSet {
+    private PriorityQueue <Integer> pq= null;
+
+    public SmallestInfiniteSet() {
+        pq= new PriorityQueue<>(1000);
+        for(int i=1; i<=1000; i++){
+            pq.add(i);
+        }
+    }
+    
+    public int popSmallest() {
+        return pq.poll();
+    }
+    
+    public void addBack(int num) {
+        if(!pq.contains(num)){
+            pq.add(num);
+        }
+    }
+}
