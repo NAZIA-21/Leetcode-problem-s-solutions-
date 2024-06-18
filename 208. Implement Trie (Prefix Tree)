@@ -1,0 +1,45 @@
+//LeetCode 208. Implement Trie (Prefix Tree)
+class Trie {
+    private Trie[]children;
+    private boolean eow;
+
+    public Trie() {
+        children = new Trie[26];
+        eow= false;
+    }
+    
+    public void insert(String word) {
+        Trie currentNode= this;
+        for(char letter: word.toCharArray()){
+            int indx= letter - 'a';
+            if(currentNode.children[indx] == null){ // create node
+                currentNode.children[indx]= new Trie();
+            }
+            currentNode= currentNode.children[indx];
+        }
+        currentNode.eow= true;
+    }
+    
+    public boolean search(String word) {
+        Trie node= searchPrefix(word);
+        return node!= null && node.eow;
+    }
+    
+    public boolean startsWith(String prefix) {
+        Trie node= searchPrefix(prefix);
+        return node!= null;
+    }
+
+    private Trie searchPrefix(String s){
+        Trie currentNode= this;
+        for(int letter: s.toCharArray()){
+            int idx= letter - 'a';
+
+            if(currentNode.children[idx] == null){
+                 return null;
+            }
+            currentNode= currentNode.children[idx];
+        }
+        return currentNode;
+    }
+}
