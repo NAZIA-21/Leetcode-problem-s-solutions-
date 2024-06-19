@@ -1,0 +1,65 @@
+//LeetCode 1268. Search Suggestions System
+class Trie {
+    Trie[] children = new Trie[26]; 
+    List<Integer> indices = new ArrayList<>();
+
+    // insert
+    public void insert(String word, int index) {
+        Trie node = this;
+        for (int j = 0; j < word.length(); ++j) {
+            int charIdx = word.charAt(j) - 'a'; 
+            if (node.children[charIdx] == null) {
+                node.children[charIdx] = new Trie();
+            }
+            node = node.children[charIdx];
+          
+            if (node.indices.size() < 3) {
+                node.indices.add(index);
+            }
+        }
+    }
+
+    // search 
+    public List<Integer>[] search(String word) {
+        Trie node = this;
+        int wordLength = word.length();
+        List<Integer>[] searchResults = new List[wordLength];
+        Arrays.setAll(searchResults, k -> new ArrayList<>());
+        for (int i = 0; i < wordLength; ++i) {
+            int charIdx = word.charAt(i) - 'a'; 
+            if (node.children[charIdx] == null) {
+                break; 
+            }
+            node = node.children[charIdx]; 
+            searchResults[i] = node.indices; 
+        }
+        return searchResults;
+    }
+}
+
+class Solution {
+    
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        
+        Arrays.sort(products);
+        Trie trie = new Trie();
+      
+        // Insert all products into the trie
+        for (int i = 0; i < products.length; ++i) {
+            trie.insert(products[i], i);
+        }
+      
+        List<List<String>> suggestions = new ArrayList<>(); 
+      
+        // Search each prefix of the searchWord and construct the final suggestion list
+        for (List<Integer> indices : trie.search(searchWord)) {
+            List<String> productList = new ArrayList<>();
+            for (int index : indices) { // Convert the indices to actual product strings
+                productList.add(products[index]);
+            }
+            suggestions.add(productList);
+        }
+      
+        return suggestions; 
+    }
+}
