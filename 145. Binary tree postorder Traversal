@@ -1,5 +1,6 @@
 //LeetCode 145: Binary tree postorder Traversal
 
+//Approach 1: 
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> res= new ArrayList<>();
@@ -16,5 +17,38 @@ class Solution {
         postOrder(root.right, res);
         res.add(root.val);
 
+    }
+}
+
+//Approach 2: Using two stack
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res= new ArrayList<>();
+
+        if(root== null) return res;
+
+        Stack <TreeNode> st1= new Stack<>();
+        Stack <TreeNode> st2= new Stack<>();
+
+        st1.push(root);
+
+        while(!st1.empty()){
+            root= st1.pop();
+
+            st2.push(root);
+
+            if(root.left != null){
+                st1.push(root.left);
+            }
+            if(root.right != null){
+                st1.push(root.right);
+            }
+        }
+
+        while(!st2.empty()){
+            res.add(st2.pop().val);
+        }
+       
+        return res;
     }
 }
