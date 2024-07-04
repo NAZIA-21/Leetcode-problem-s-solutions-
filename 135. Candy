@@ -1,0 +1,28 @@
+//LeetCode 135. Candy
+class Solution {
+    public int candy(int[] ratings) {
+        int increasingCount=0;
+        int decreasingCount=0;
+        int peakCandy=0;
+        int totCandy=1;
+
+        for(int i=1 ; i< ratings.length ; i++){
+            if(ratings[i-1] < ratings[i]){
+                increasingCount++;
+                peakCandy =increasingCount + 1;
+                decreasingCount=0;
+                totCandy += peakCandy;
+            } else if( ratings[i-1] == ratings[i]){
+                increasingCount=0;
+                decreasingCount=0;
+                peakCandy=0;
+                totCandy ++;
+            } else{
+                decreasingCount++;
+                increasingCount=0;
+                totCandy += decreasingCount + (peakCandy > decreasingCount ? 0 : 1);
+            }
+        }
+        return totCandy;
+    }
+}
