@@ -1,0 +1,26 @@
+//LeetCode 77. Combinations
+
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>>res= new ArrayList<>();
+        solve(n , k, new ArrayList<>(), res);
+        return res;
+    }
+
+    public void solve(int n, int k, List<Integer> curr, List<List<Integer>> res){
+        if(k==0){
+            res.add(new ArrayList<> (curr));
+            return;
+        }
+
+        if(n==0) return ;
+
+        //pick
+        curr.add(n);
+        solve(n-1 , k-1, curr, res);
+        //not-pick
+        curr.remove(curr.size() - 1);
+        solve(n-1, k, curr, res);
+
+    }
+}
