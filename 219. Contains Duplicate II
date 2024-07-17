@@ -1,0 +1,18 @@
+//LeetCode 219. Contains Duplicate II
+
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> indexMap= new HashMap<>();
+
+        for(int currIndex=0; currIndex< nums.length; currIndex++){
+
+            int lastIndex= indexMap.getOrDefault(nums[currIndex] , -1000000);
+
+            if(currIndex- lastIndex <= k) return true;
+
+            indexMap.put(nums[currIndex] , currIndex);
+        }
+        return false;
+        
+    }
+}
