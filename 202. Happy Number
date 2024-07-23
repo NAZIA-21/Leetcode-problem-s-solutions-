@@ -1,0 +1,23 @@
+//LeetCode 202. Happy Number
+class Solution {
+    public boolean isHappy(int n) {
+        int slow= n;
+        int fast= getNext(n);
+
+        while(slow != fast){
+            slow= getNext(slow);
+            fast= getNext(getNext(fast));
+        }
+        return slow==1;
+        
+    }
+    private int getNext(int num){
+        int sumOfSquare=0;
+        while(num >0){
+            int digit= num% 10;
+            sumOfSquare += digit * digit;
+            num/=10;
+        }
+     return sumOfSquare;
+    }
+}
