@@ -1,0 +1,20 @@
+//LeetCode 209. Minimum Size Subarray Sum
+
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int n= nums.length;
+        int minLength= n+1;
+        int sum=0;
+
+        for(int start=0,end=0; end<n; end++){
+            sum += nums[end];
+
+            //shrink the window
+            while(start<n && sum>=target){
+                minLength= Math.min(minLength , end-start+1);
+                sum -= nums[start++];//decrementing start value from sum and incrementing start position
+            }
+        }
+        return minLength <= n ? minLength : 0;
+    }
+}
