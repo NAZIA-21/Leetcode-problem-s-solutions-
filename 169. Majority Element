@@ -1,4 +1,14 @@
 //LeetCode 169. Majority Element
+
+//Approach 1:
+class Solution {
+    public int majorityElement(int[] nums) {
+      Arrays.sort(nums);
+      return nums[nums.length/2];
+}
+}
+
+//Approach 2:
 class Solution {
     public int majorityElement(int[] nums) {
         int count= 0;
