@@ -1,0 +1,51 @@
+//LeetCode 106. Construct Binary Tree from Inorder and Postorder Traversal
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+     private Map<Integer, Integer> inorderMap= new HashMap<>();
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        for(int i=0; i<inorder.length; i++){
+            inorderMap.put(inorder[i], i);
+        }
+
+        return buildTreeRecursive(inorder, postorder, 0, 0, inorder.length);
+    }
+
+    public TreeNode buildTreeRecursive(int[]inorder, int []postorder, int inorderStart, int postorderStart, int length){
+        if(length <= 0){
+            return null;
+        }
+
+        //find root
+        int rootVal= postorder[postorderStart +length -1];
+        //find root index
+        int inorderRootIndex= inorderMap.get(rootVal);
+        //create treenode for the value found
+        TreeNode rootNode= new TreeNode(rootVal);
+        //find no. of nodes in left subtree
+        int leftSubTreeLength= inorderRootIndex - inorderStart;
+
+        //build left subtree
+        rootNode.left=  buildTreeRecursive(inorder, postorder, inorderStart,  postorderStart,  leftSubTreeLength);
+
+        //build right subtree
+        rootNode.right=  buildTreeRecursive(inorder, postorder, inorderRootIndex + 1, postorderStart +  leftSubTreeLength, length - leftSubTreeLength -1);
+
+        return rootNode;
+    }
+}
+ 
