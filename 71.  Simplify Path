@@ -1,0 +1,45 @@
+//LeetCode 71.  Simplify Path
+//Approach 1: Using stack 
+class Solution {
+    public String simplifyPath(String path) {
+        Stack <String> st= new Stack<>();
+        StringBuilder res= new StringBuilder ();
+        String[] p= path.split("/");
+
+        for(int i=0; i<p.length; i++){
+            if(!st.isEmpty() && p[i].equals("..")) st.pop();
+            else if(!p[i].equals("") && !p[i].equals(".") && !p[i].equals("..")) st.push(p[i]);
+        }
+
+        if(st.isEmpty()) return "/";
+
+        while(!st.isEmpty()){
+            res.insert(0, st.pop()).insert(0, "/");
+        }  
+
+        return res.toString();      
+    }
+}
+
+
+//Approach 2: Deque
+class Solution {
+    public String simplifyPath(String path) {
+        Deque <String> dq= new LinkedList<>();
+        StringBuilder res= new StringBuilder ();
+        String[] p= path.split("/");
+
+        for(int i=0; i<p.length; i++){
+            if(!dq.isEmpty() && p[i].equals("..")) dq.poll();
+            else if(!p[i].equals("") && !p[i].equals(".") && !p[i].equals("..")) dq.push(p[i]);
+        }
+
+        if(dq.isEmpty()) return "/";
+
+        while(!dq.isEmpty()){
+            res.append("/").append(dq.pollLast());
+        }  
+
+        return res.toString();      
+    }
+}
