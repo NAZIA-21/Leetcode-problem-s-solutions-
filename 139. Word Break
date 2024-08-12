@@ -1,0 +1,21 @@
+//LeetCode 139. Word Break
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet= new HashSet<>(wordDict);
+        int n= s.length();
+
+        boolean []wordBreakTracker= new boolean[n +1];
+
+        wordBreakTracker[0]= true;
+
+        for(int i=1; i<= n; i++){
+            for(int j=0; j<i ; j++){
+                if(wordBreakTracker[j] && wordSet.contains(s.substring(j , i))){
+                    wordBreakTracker[i] = true;
+                    break;
+                }
+            }
+        }
+     return wordBreakTracker[n];
+    }
+}
