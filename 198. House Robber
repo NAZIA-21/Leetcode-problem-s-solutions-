@@ -1,0 +1,16 @@
+//LeetCode 198. House Robber
+
+class Solution {
+    public int rob(int[] nums) {
+     int prevRob=0;
+     int prevNoRob=0;
+
+     for(int curr : nums){
+        int temp= Math.max(prevRob, prevNoRob);
+        prevRob= prevNoRob + curr;
+        prevNoRob= temp;
+     }
+
+     return Math.max(prevRob , prevNoRob);
+    }
+}
