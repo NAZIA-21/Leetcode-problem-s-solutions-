@@ -1,0 +1,57 @@
+//LeetCode 79. Word Search 
+class Solution {
+    private int rows;
+    private int cols;
+    private String tarWord;
+    private char[][] charBoard;
+
+    public boolean exist(char[][] board, String word) {
+        rows = board.length;      
+        cols = board[0].length;    
+        tarWord = word;        
+        charBoard = board;         
+      
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (dfs(i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs(int row, int col, int index) {
+        // Check if we are at the last character of the word
+        if (index == tarWord.length() - 1) {
+            return charBoard[row][col] == tarWord.charAt(index);
+        }
+      
+        // Check if current cell does not match the character 
+        if (charBoard[row][col] != tarWord.charAt(index)) {
+            return false;
+        }
+      
+        // Temporarily mark the current cell as visited by replacing its value
+        char tempChar = charBoard[row][col];
+        charBoard[row][col] = '0';
+      
+        int[] directions = {-1, 0, 1, 0, -1};
+      
+        for (int d = 0; d < 4; d++) {
+            int newRow = row + directions[d];
+            int newCol = col + directions[d + 1];
+          
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && charBoard[newRow][newCol] != '0') {
+                if (dfs(newRow, newCol, index + 1)) {
+                    return true;
+                }
+            }
+        }
+      
+        charBoard[row][col] = tempChar;
+      
+        return false;
+    }
+}
