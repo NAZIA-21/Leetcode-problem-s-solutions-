@@ -1,0 +1,56 @@
+//LeetCode 68. Text Justification
+
+class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        List<String> justifiedText = new ArrayList<>();
+        int idx = 0;
+        int n = words.length;
+
+        // Process all the words
+        while (idx < n) {
+            List<String> currentLineWords = new ArrayList<>();
+            currentLineWords.add(words[idx]);
+            int currentLineWidth = words[idx].length();
+            idx++;
+
+            // Try to fit as many words in the current line as possible
+            while (idx < n && currentLineWidth + 1 + words[idx].length() <= maxWidth) {
+                currentLineWidth += 1 + words[idx].length();
+                currentLineWords.add(words[idx++]);
+            }
+
+            // If it's the last line or the line contains only one word
+            if (idx == n || currentLineWords.size() == 1) {
+                String leftAlignedText = String.join(" ", currentLineWords);
+
+                // Fill the remaining space on the right with spaces
+                String rightPadding = " ".repeat(maxWidth - leftAlignedText.length());
+                justifiedText.add(leftAlignedText + rightPadding);
+                continue;
+            }
+
+            // Distribute spaces evenly amongst words
+            int totalSpaces = maxWidth - (currentLineWidth - currentLineWords.size() + 1);
+            int spaceWidth = totalSpaces / (currentLineWords.size() - 1);
+            int extraSpacesCount = totalSpaces % (currentLineWords.size() - 1);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < currentLineWords.size() - 1; i++) {
+                sb.append(currentLineWords.get(i));
+
+                sb.append(" ".repeat(spaceWidth));
+
+                // Add an extra space to the leftmost gaps if needed
+                if (i < extraSpacesCount) {
+                    sb.append(" ");
+                }
+            }
+
+            // Append the last word in the line
+            sb.append(currentLineWords.get(currentLineWords.size() - 1));
+            justifiedText.add(sb.toString());
+        }
+
+        return justifiedText;
+    }
+}
