@@ -1,0 +1,44 @@
+//LeetCode 452. Minimum Number of Arrows to Burst Balloons
+//Method 1:
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if(points.length== 0) return 0;
+
+        Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));
+
+        int arrow=1 ;
+        int end= points[0][1];
+
+        for(int i=0; i<points.length ; i++){
+            if(points[i][0] > end){
+                end= points[i][1];
+                arrow++;
+            }
+        } 
+    return arrow;
+    }
+}
+
+
+//Method 2:
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if(points.length== 0) return 0;
+
+        Arrays.sort(points, Comparator.comparingInt(interval -> interval[1]));
+
+        int arrow=0 ;
+        long lastArrowPos= Long.MIN_VALUE;
+
+        for(int interval[] : points){
+            int start= interval[0];
+            int end= interval[1];
+
+            if(start > lastArrowPos){
+                arrow++;
+                lastArrowPos = end;
+            }
+        }
+    return arrow;
+    }
+}
