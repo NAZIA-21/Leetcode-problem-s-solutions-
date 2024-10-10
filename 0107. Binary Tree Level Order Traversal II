@@ -1,0 +1,45 @@
+//LeetCode 107. Binary Tree Level Order Traversal II
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> res= new LinkedList<>();
+        Deque<TreeNode> q = new LinkedList<>();
+        q.offerLast(root);
+
+        if(root == null) return res;
+
+        while(!q.isEmpty()){
+            List<Integer> currLevel= new ArrayList<>();
+
+            for(int i= q.size() ; i>0 ; i--){
+                TreeNode node= q.pollFirst();
+                currLevel.add(node.val);
+
+                if(node.left != null){
+                    q.offerLast(node.left);
+                }
+
+                if(node.right != null){
+                    q.offerLast(node.right);
+                }
+            }
+            res.addFirst(currLevel);
+        }
+       return res; 
+    }
+}
