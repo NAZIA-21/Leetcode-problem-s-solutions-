@@ -1,0 +1,104 @@
+//LeetCode 76. Minimum Window Substring
+
+//Approach 1: 
+class Solution {
+    public String minWindow(String source, String target) {
+        HashMap<Character,Integer> freqMap = new HashMap<>();
+        int targetLen = target.length();
+        int sourceLen= source.length();
+        for(int i=0;i<targetLen;i++){
+            char ch = target.charAt(i);
+            freqMap.put(ch,freqMap.getOrDefault(ch,0)+1);
+        }
+        int uniqueCharCount=freqMap.size();
+        int startIndex=-1;
+        int windowStart=0;
+        int windowEnd=0;
+        int minLen = Integer.MAX_VALUE;
+       
+        // O(2N)
+        while(windowEnd< sourceLen){
+            //Expansion Phase
+            char ch = source.charAt(windowEnd);
+            if(freqMap.containsKey(ch)){
+                freqMap.put(ch,freqMap.get(ch)-1);
+                if(freqMap.get(ch)==0){
+                    uniqueCharCount--;
+                }
+            }
+            //Shrinking Phase
+            while(uniqueCharCount==0){
+                //find len
+                int len = windowEnd-windowStart+1;
+                if(len<minLen){
+                    minLen = len;
+                    startIndex = windowStart;
+                }
+                ch = source.charAt(windowStart);
+                if(freqMap.containsKey(ch)){
+                    freqMap.put(ch,freqMap.get(ch)+1);
+                    if(freqMap.get(ch)>0){
+                        uniqueCharCount++;
+                    }
+                }
+                windowStart++;
+            }
+            windowEnd++;
+
+        }
+        if(startIndex==-1){
+            return "";
+        }
+        return source.substring(startIndex,startIndex+minLen);
+    }
+}
+
+
+//Approach 2:
+class Solution {
+    public String minWindow(String source, String target) {
+        int[] charFrequencyInTarget = new int[128];
+        int[] charFrequencyInWindow = new int[128];
+      
+        int sourceLen = source.length();
+        int targetLen = target.length();
+      
+        for (int i = 0; i < targetLen; ++i) {
+            charFrequencyInTarget[target.charAt(i)]++;
+        }
+      
+        int matchCount = 0; // Count of characters that matches from target
+        int windowStart = 0; // The start index of the current window
+        int minWindowStart = -1; // The start index of the minimum window
+        int minLen = Integer.MAX_VALUE; 
+      
+        for (int windowEnd = 0; windowEnd < sourceLen; windowEnd++) {
+            charFrequencyInWindow[source.charAt(windowEnd)]++;
+          
+            if (charFrequencyInTarget[source.charAt(windowEnd)] >= charFrequencyInWindow[source.charAt(windowEnd)]) {
+                matchCount++;
+            }
+          
+            while (matchCount == targetLen) {
+                int windowLen = windowEnd - windowStart + 1; 
+              
+                if (windowLen < minLen) {
+                    minLen = windowLen;
+                    minWindowStart = windowStart;
+                }
+              
+                char charAtStart = source.charAt(windowStart);
+              
+                if (charFrequencyInTarget[charAtStart] >= charFrequencyInWindow[charAtStart]) {
+                    matchCount--;
+                }
+              
+                charFrequencyInWindow[charAtStart]--;
+                windowStart++; 
+            }
+        }
+      
+        return minWindowStart < 0 ? "" : source.substring(minWindowStart, minWindowStart + minLen);
+    }
+}
+
