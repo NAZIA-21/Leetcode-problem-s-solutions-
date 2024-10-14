@@ -1,0 +1,47 @@
+//LeetCode 30. Substring with Concatenation of All Words
+
+class Solution {
+  
+    public List<Integer> findSubstring(String s, String[] words) {
+       
+       Map<String , Integer> wordCount= new HashMap<>();
+
+       for(String word : words){
+        wordCount.merge(word , 1 , Integer::sum);
+       }
+
+       int strLen= s.length(), noOfWords = words.length, wordLen= words[0].length();
+       List<Integer> indices= new ArrayList<>();
+
+       for(int i=0; i<wordLen ; i++){
+        Map<String , Integer> currCount= new HashMap<>();
+        int left=i, right=i, totalWords=0;
+
+            while(right + wordLen <= strLen){
+                String sub= s.substring(right , right + wordLen);
+                right += wordLen;
+
+                if(!wordCount.containsKey(sub)){
+                    currCount.clear();
+                    left = right;
+                    totalWords=0;
+                    continue;
+                }
+                currCount.merge(sub , 1, Integer::sum);
+                totalWords++;
+
+                while(currCount.get(sub) > wordCount.get(sub)){
+                    String removed= s.substring(left , left+ wordLen);
+                    left += wordLen;
+                    currCount.merge(removed , -1 , Integer::sum);
+                    totalWords--;
+                }
+
+                if(totalWords == noOfWords){
+                    indices.add(left);
+                }
+            }
+       }
+       return indices;
+    }
+}
