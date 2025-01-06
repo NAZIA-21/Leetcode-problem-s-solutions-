@@ -1,6 +1,6 @@
 //LeetCode 205. Isomorphic Strings
 
-Approach 1: Using HashSet
+Approach 1: Using HashMap
 class Solution {
     public boolean isIsomorphic(String s, String t) {
      
