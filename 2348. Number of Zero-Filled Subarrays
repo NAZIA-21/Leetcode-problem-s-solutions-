@@ -1,0 +1,15 @@
+//LeetCode 2348. Number of Zero-Filled Subarrays
+
+class Solution {
+    public long zeroFilledSubarray(int[] nums) {
+        long totalSubArrays= 0;
+        int zeroCnt= 0;
+
+        for(int num : nums){
+            zeroCnt = (num != 0) ? 0 : zeroCnt + 1;
+
+            totalSubArrays += zeroCnt;
+        }
+        return totalSubArrays;
+    }
+}
