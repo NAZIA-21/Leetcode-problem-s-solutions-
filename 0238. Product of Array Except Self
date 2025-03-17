@@ -1,5 +1,6 @@
 //LeetCode 238. Product of Array Except Self
 
+//Approach 1:
 class Solution {
     public int[] productExceptSelf(int[] nums) {
         int n= nums.length;
@@ -29,5 +30,35 @@ class Solution {
             }
         }
         return output;
+    }
+}
+
+
+//Approach 2:
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int []result = new int[nums.length];
+        int product = 1;
+        int zeros =0;
+
+        for(int i=0; i< nums.length; i++){
+            if(nums[i] == 0){
+                zeros++;
+            }else{
+                product *= nums[i];
+            }
+        }
+
+        for(int i=0; i< nums.length; i++){
+            if(zeros > 1){
+                result[i] = 0;
+            }else if(zeros == 1){
+                result[i] = nums[i] == 0 ? product : 0;
+            }else{
+                result[i] = product / nums[i];
+            }
+        }
+        return result;
+        
     }
 }
