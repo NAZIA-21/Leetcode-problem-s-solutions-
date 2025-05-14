@@ -1,0 +1,54 @@
+//LeetCode 754. Reach a Number
+
+//Method 1: Without binar search
+class Solution {
+    public int reachNumber(int target) {
+        int steps = 1;
+        int moves = 0;
+        int currPos = 0;
+        target = Math.abs(target);
+
+        while(true){
+            if(currPos >= target){
+                if((currPos + target) % 2 != 0){
+                    //odd -- we cannot flip moves
+                    currPos += steps;
+                    steps++;
+                    moves++;
+                } else break;
+            } else{
+                currPos += steps;
+                steps++;
+                moves++;
+            } 
+        }
+        return moves;
+    }
+}
+
+
+//Method 2: Binaryy Search
+class Solution {
+    public static int reachNumber(int target) {
+        target = Math.abs(target);
+        int start = 1, end = target, currentValue = 0, steps = 0;
+        long sum = 0;
+        while(start <= end) {
+            int mid = start + (end - start)/2;
+            sum = (long)mid*(mid+1)/2;
+            if(sum >= target) {
+                currentValue = (int)sum;
+                steps = mid;
+                end = mid-1;
+            } 
+            else {
+                start = mid+1;
+            }
+        }
+        while((currentValue -target)%2!=0) {
+            steps++;
+            currentValue +=steps;
+        }
+        return steps;
+    }
+}
