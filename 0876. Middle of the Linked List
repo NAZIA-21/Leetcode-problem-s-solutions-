@@ -1,7 +1,7 @@
 //LeetCode 876. Middle of the Linked List
 
 //Approach 1 : Brute force
-//TC : O(n)
+//TC : O(n) + O(n/2) = O(n)
 //SC : O(1)
 
 /**
@@ -36,6 +36,10 @@ class Solution {
 
 
 //Approach 2 : Two pointer
+//TC : O(n)
+//SC : O(1)
+
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
