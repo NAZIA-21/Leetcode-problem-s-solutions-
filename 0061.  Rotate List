@@ -14,44 +14,43 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-
-        if(head== null || head.next == null){
+        if(head == null || head.next == null){
             return head;
         }
 
-        ListNode curr= head;
-        int length=0;
-        while(curr != null){
-            length++;
-            curr = curr.next;
+        //Step 1 : find LL length
+        int size = 0;
+        ListNode temp = head;
+        while(temp != null){
+            size++;
+            temp = temp.next;
         }
 
-        //normalize k in case it is greater than linkedlist's length
-        k %= length;
+        //Step 2 : Noramlize k
+        k  = k % size;
 
-        if(k==0){
+        if(k == 0){
             return head;
         }
 
-        ListNode slow= head;
-        ListNode fast= head;
+        //Step 3 : node before new head
+        ListNode slow = head;
+        ListNode fast = head;
 
-        while(k >0){
-            fast= fast.next;
-            k--;
+        while(k-- > 0){
+            fast = fast.next;
         }
 
         while(fast.next != null){
             slow = slow.next;
-            fast= fast.next;
+            fast = fast.next;
         }
-
+        //Step 4 : new head
         ListNode newHead = slow.next;
-        slow.next= null;
-        fast.next= head;
+        slow.next = null;
+        fast.next = head;
 
         return newHead;
-        
     }
 }
 
