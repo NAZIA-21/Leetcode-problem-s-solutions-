@@ -89,7 +89,7 @@ class Solution {
 
 
 //Approach 4 : Recursive with StringBuilder and unProcessed String
-//TC : 4^n.n
+//TC : 4^n
 //SC : 4^n.n
 class Solution {
     public List<String> letterCombinations(String digits) {
