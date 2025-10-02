@@ -1,6 +1,23 @@
 //LeetCode 88. Merge Sorted Array
 
 //Approach 1:
+//TC: O((m+n) log(m+n))
+//SC: O(log(m+n))
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = 0;
+        while(m < m+n && i< n){
+            nums1[m] = nums2[i];
+            i++;
+            m++;
+        }
+        Arrays.sort(nums1);
+    }
+}
+
+//Approach 2:
+//TC: O(m+n)
+//SC: O(1)
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int i= m-1;
@@ -17,7 +34,9 @@ class Solution {
     }
 }
 
-//Approach 2:
+//Approach 3:
+//TC: O(m+n)
+//SC: O(1)
 class Solution {
     
     public void merge(int[] nums1, int m, int[] nums2, int n) {
