@@ -1,6 +1,8 @@
 //LeetCode 28. Find the Index of the First Occurrence in a String
 
 //Method 1:
+//TC : O(l1 * l2)
+//SC : O(l2)
 class Solution {
     public int strStr(String haystack, String needle) {
       int l1= haystack.length();
@@ -25,6 +27,8 @@ class Solution {
 }
 
 //Method 2:
+//TC : O(l1 * l2)
+//SC : O(1)
 class Solution {
     public int strStr(String haystack, String needle) {
       if(needle.isEmpty()){
