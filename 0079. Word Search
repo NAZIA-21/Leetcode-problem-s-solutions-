@@ -1,4 +1,6 @@
-//LeetCode 79. Word Search 
+//LeetCode 79. Word Search
+//TC : O(M × N × 4^L)
+//SC : O(L)
 class Solution {
     private int rows;
     private int cols;
