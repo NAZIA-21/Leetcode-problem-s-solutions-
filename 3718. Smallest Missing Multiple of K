@@ -1,0 +1,53 @@
+//Approach 1:
+//TC: O(n)
+//SC: O(n)
+class Solution {
+    public int missingMultiple(int[] nums, int k) {
+
+        HashSet set = new HashSet<>();
+        int ans = k;
+
+        for(int num : nums){
+            if(num % k == 0){
+                set.add(num);
+            }
+        }
+
+        while(true){
+            if(set.contains(ans)){
+                ans += k;
+            } else{
+                return ans;
+            }
+        }
+    }
+}
+
+
+//Approach 2:
+class Solution {
+    public int missingMultiple(int[] nums, int k) {
+        
+        int ans = k;
+
+        while(true){
+
+            boolean found = false;
+
+            for(int num : nums){
+
+                if(num == ans){
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found){
+                return ans;
+            }
+
+            ans += k;
+
+        } 
+    }
+}
