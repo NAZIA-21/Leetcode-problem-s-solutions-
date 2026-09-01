@@ -1,0 +1,57 @@
+//Approach 1:
+//TC: O(n)
+//SC: O(n*d)
+class Solution {
+    public int[] separateDigits(int[] nums) {
+
+        int size = 0;
+        for(int num : nums){
+            while(num > 0){
+                size++;
+                num /= 10;
+            }
+        }
+
+        int[] separateDigits = new int[size];
+        int idx = size - 1;
+
+        for(int i = nums.length - 1; i >= 0; i--){
+            int num = nums[i];
+
+            while(num > 0){
+                separateDigits[idx--] = num % 10;
+                num /= 10;
+            }
+        }
+
+        return separateDigits;
+    }
+}
+
+
+
+//Approach 2:
+//TC: O(n)
+//SC: O(n*d)
+class Solution {
+    public int[] separateDigits(int[] nums) {
+        
+        ArrayList<int[]> separateDigits = new ArrayList<>();
+        int idx = -1;
+
+        for(int i = 0; i < nums.length; i++){
+            int num = nums[i];
+            String numStr = String.valueOf(num);
+            idx = numStr.length() - 1;
+            int[] arr = new int[numStr.length()];
+            while(num > 0){
+                int rem = num % 10;
+                arr[idx] = rem;
+                idx--;
+                num = num / 10;
+            }
+            separateDigits.add(arr);
+        }
+        return separateDigits.stream().flatMapToInt(Arrays::stream).toArray();
+    }
+}
